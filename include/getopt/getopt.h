@@ -33,6 +33,20 @@
 extern "C" {
 #endif
 
+#    if defined (_MSC_VER)
+#        ifdef __cplusplus
+#            define GETOPT_API extern "C" __declspec(dllexport)
+#        else
+#            define GETOPT_API __declspec(dllexport)
+#        endif
+#    elif defined(__GNUC__) || defined(__clang__) 
+#        ifdef __cplusplus
+#            define GETOPT_API extern "C" __attribute__((visibility("default")))
+#        else
+#            define GETOPT_API __attribute__((visibility("default")))
+#        endif
+#    endif    // else: FE_COMPILER_MSVC
+
 /*
 	File: getopt.h
 		Sumary:
@@ -128,7 +142,7 @@ typedef struct getopt_context
 	Returns:
 		0 on success, otherwise error-code.
 */
-int getopt_create_context( getopt_context_t* ctx, int argc, const char** argv, const getopt_option_t* opts );
+GETOPT_API int getopt_create_context( getopt_context_t* ctx, int argc, const char** argv, const getopt_option_t* opts );
 
 /*
 	Function: getopt_next
@@ -147,7 +161,7 @@ int getopt_create_context( getopt_context_t* ctx, int argc, const char** argv, c
 		      the value stored is value in the found option.
 		- -1 no more options to parse!
 */
-int getopt_next( getopt_context_t* ctx );
+GETOPT_API int getopt_next( getopt_context_t* ctx );
 
 /*
 	Function: GetOptCreateHelpString
@@ -161,7 +175,7 @@ int getopt_next( getopt_context_t* ctx );
 	Returns:
 		buffer filled with a help-string.
 */
-const char* getopt_create_help_string( getopt_context_t* ctx, char* buffer, size_t buffer_size );
+GETOPT_API const char* getopt_create_help_string( getopt_context_t* ctx, char* buffer, size_t buffer_size );
 
 #if defined (__cplusplus)
 }

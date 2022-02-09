@@ -64,7 +64,7 @@ static int str_format(char* buf, size_t buf_size, const char* fmt, ...)
 	return ret;
 }
 
-int getopt_create_context( getopt_context_t* ctx, int argc, const char** argv, const getopt_option_t* opts )
+GETOPT_API int getopt_create_context( getopt_context_t* ctx, int argc, const char** argv, const getopt_option_t* opts )
 {
 	ctx->argc            = (argc > 1) ? (argc - 1) : 0; /* stripping away file-name! */
 	ctx->argv            = (argc > 1) ? (argv + 1) : argv; /* stripping away file-name! */
@@ -95,7 +95,7 @@ int getopt_create_context( getopt_context_t* ctx, int argc, const char** argv, c
 	return 0;
 }
 
-int getopt_next( getopt_context_t* ctx )
+GETOPT_API int getopt_next( getopt_context_t* ctx )
 {
 	/* are all options processed? */
 	if(ctx->current_index == ctx->argc )
@@ -257,7 +257,7 @@ int getopt_next( getopt_context_t* ctx )
  	return -1;
 }
 
-const char* getopt_create_help_string( getopt_context_t* ctx, char* buffer, size_t buffer_size )
+GETOPT_API const char* getopt_create_help_string( getopt_context_t* ctx, char* buffer, size_t buffer_size )
 {
 	size_t buffer_pos = 0;
 	int    opt_index  = 0;
