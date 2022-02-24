@@ -1,13 +1,13 @@
 package getopt
 
-when ODIN_OS == "windows" {
+when ODIN_OS == .Windows {
   when ODIN_DEBUG == true {
       foreign import getopt_lib "getoptd.lib"
   }
   else {
       foreign import getopt_lib "getopt.lib"
   }
-} else when ODIN_OS == "darwin" {
+} else when ODIN_OS == .Darwin {
   foreign import getopt_lib "getopt.a"
 }
 
